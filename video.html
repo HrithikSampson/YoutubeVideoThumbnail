@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Video Thumbnail Maker</title>
+</head>
+<body>
+      <input id="field-video" type="file"  accept="video/*">
+      <video src="" width="640" height="480" controls preload="metadata" style="display:block;">
+              
+                Video not playing
+      </video>
+      <button id="capture" style="display:block;">Capture Thumbnail</button>
+      <canvas width="640" height="480"  style="background-image: 100% 100%;" style="display: block;"></canvas>
+      <div style="display: flex;">
+        <input id="show-url" type="text" placeholder="Shows the input url">
+        <button id="copy-url">Copy Url!!!</button>
+      </div>
+</body>
+<script>
+        const input = document.querySelector('#field-video');
+        const video = document.querySelector('video');
+        const canvas = document.querySelector('canvas');
+        const button = document.querySelector('#capture');
+        const copyUrl = document.querySelector('#copy-url');
+        const showUrl = document.querySelector('#show-url');
+        const context=canvas.getContext('2d');
+        video.volume = 1.0;     
+        video.muted = false;
+        console.log(input);
+        
+        button.addEventListener('click',()=>{
+                context.drawImage(video,0,0,640,480);
+                
+        })
+        input.addEventListener("change" , (event)=>{
+                const url = URL.createObjectURL(event.target.files[0]);
+                console.log(url);
+                video.setAttribute('src',url);
+        })
+        copyUrl.addEventListener('click',()=>{
+                showUrl.value=canvas.toDataURL();
+                showUrl.focus();
+                showUrl.select();
+                document.execCommand('copy');
+                
+        })
+        
+</script>
+</html>
